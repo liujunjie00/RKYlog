@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:sharedUserId="android.uid.system">
+    android:sharedUserId="android.uid.system" >
 
     <application
         android:allowBackup="true"
@@ -12,10 +12,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RKYLog"
-        tools:targetApi="31">
+        tools:targetApi="31" >
+        <service
+            android:name=".service.ChargingAnimationService"
+            android:enabled="true"
+            android:exported="true" >
+        </service>
+
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,16 +32,15 @@
         <service
             android:name=".service.YlogService"
             android:enabled="true"
-            android:exported="false"/>
+            android:exported="false" />
 
         <activity
-            android:name="com.incar.rkylog.YLogActivity"
-            android:exported="true"
-            >
-        </activity>
+            android:name=".YLogActivity"
+            android:exported="true" />
 
-        <receiver android:name=".util.BootBr"
-            android:exported="true">
+        <receiver
+            android:name=".util.BootBr"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
