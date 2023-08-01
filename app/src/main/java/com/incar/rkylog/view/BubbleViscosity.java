@@ -147,8 +147,8 @@ public class BubbleViscosity extends SurfaceView implements
     private void onMDraw() {
         Canvas canvas = mHolder.lockCanvas();
         canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-        bubbleDraw(canvas);
-        lastCircleDraw(canvas);
+        //bubbleDraw(canvas);
+        //lastCircleDraw(canvas);
         centreCircleDraw(canvas);
         textPaint.getTextBounds(text, 0, text.length(), rect);
         canvas.drawText(text, centreCirclePoint.x - rect.width() / 2,

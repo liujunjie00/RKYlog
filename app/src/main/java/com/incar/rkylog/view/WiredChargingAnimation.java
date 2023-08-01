@@ -1,16 +1,23 @@
 package com.incar.rkylog.view;
 
+import static android.content.Context.WINDOW_SERVICE;
+import static android.view.WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER;
+
 import android.content.Context;
 import android.graphics.PixelFormat;
+import android.graphics.Point;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 
+import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
+import android.view.WindowInsetsController;
 import android.view.WindowManager;
 import android.view.LayoutInflater;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,7 +26,7 @@ import com.incar.rkylog.R;
 
 public class WiredChargingAnimation {
 
-    public static final long DURATION = 3333;
+    public static final long DURATION = 2222; //3333
     private static final String TAG = "WiredChargingAnimation";
     private static final boolean DEBUG = true || Log.isLoggable(TAG, Log.DEBUG);
 
@@ -79,19 +86,30 @@ public class WiredChargingAnimation {
             mNextView = LayoutInflater.from(context).inflate(R.layout.wired_charging_layout, null, false);
             BubbleViscosity shcyBubbleViscosity = mNextView.findViewById(R.id.shcy_bubble_view);
             shcyBubbleViscosity.setBatteryLevel(batteryLevel+"");
+            WindowManager mWm = (WindowManager) context.getSystemService(WINDOW_SERVICE);
 
             mGravity = Gravity.CENTER_HORIZONTAL | Gravity.CENTER;
 
             final WindowManager.LayoutParams params = mParams;
-            params.height = WindowManager.LayoutParams.MATCH_PARENT;
-            params.width = WindowManager.LayoutParams.MATCH_PARENT;
-            params.format = PixelFormat.TRANSLUCENT;
+            Display display = mWm.getDefaultDisplay();
+            Point p = new Point();
+            display.getRealSize(p);
 
+            /*params.height = WindowManager.LayoutParams.MATCH_PARENT;
+            params.width = WindowManager.LayoutParams.MATCH_PARENT;*/
+            params.height = p.y;
+            params.width = p.x;
+            Toast.makeText(context, "w:"+p.x+",h"+p.y, Toast.LENGTH_SHORT).show();
+
+            params.format = PixelFormat.TRANSLUCENT;
+            params.alpha = 0.8f;
+
+            //params.type = WindowManager.LayoutParams.TYPE_SYSTEM_DIALOG;
             params.type = WindowManager.LayoutParams.TYPE_KEYGUARD_DIALOG;
             params.setTitle("Charging Animation");
             params.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
                     | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
-                    | WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+                    | WindowManager.LayoutParams.FLAG_DIM_BEHIND ;
 
             params.dimAmount = .3f;
 
@@ -137,12 +155,14 @@ public class WiredChargingAnimation {
             if (DEBUG) Log.d(TAG, "HIDE: " + this);
             mHandler.sendMessageDelayed(Message.obtain(mHandler, HIDE), duration);
         }
+        //WindowInsetsController windowInsetsController = mNextView.getWindow().getInsetsController();
 
         private void handleShow() {
             if (DEBUG) {
                 Log.d(TAG, "HANDLE SHOW: " + this + " mView=" + mView + " mNextView="
                         + mNextView);
             }
+
 
             if (mView != mNextView) {
                 // remove the old view if necessary
@@ -153,7 +173,7 @@ public class WiredChargingAnimation {
                 if (context == null) {
                     context = mView.getContext();
                 }
-                mWM = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+                mWM = (WindowManager) context.getSystemService(WINDOW_SERVICE);
                 mParams.packageName = packageName;
                 //mParams.hideTimeoutMilliseconds = DURATION;
 
