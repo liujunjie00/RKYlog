@@ -67,7 +67,6 @@ public class YLogActivity extends Activity implements View.OnClickListener {
         start_log.setOnClickListener(this);
     }
 
-    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
         int view = v.getId();

@@ -99,7 +99,7 @@ public class WiredChargingAnimation {
             params.width = WindowManager.LayoutParams.MATCH_PARENT;*/
             params.height = p.y;
             params.width = p.x;
-            Toast.makeText(context, "w:"+p.x+",h"+p.y, Toast.LENGTH_SHORT).show();
+           // ast.makeText(context, "w:"+p.x+",h"+p.y, st.LENGTH_SHORT).show();
 
             params.format = PixelFormat.TRANSLUCENT;
             params.alpha = 0.8f;

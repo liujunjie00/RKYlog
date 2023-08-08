@@ -45,7 +45,11 @@ public class ChargingAnimationService extends Service {
     }
 
 
-
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        //return super.onStartCommand(intent, flags, startId);
+        return START_STICKY;
+    }
 
     /**
      * 监听广播
@@ -65,5 +69,7 @@ public class ChargingAnimationService extends Service {
     public void onDestroy() {
         super.onDestroy();
         unregisterReceiver(batteryBroadcastReceiver);
+        Intent intent3 = new Intent(this, ChargingAnimationService.class);
+        getApplicationContext().startService(intent3);
     }
 }
