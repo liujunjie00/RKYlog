@@ -10,5 +10,5 @@
     openssl pkcs8 -inform DER -nocrypt -in platform.pk8 -out platform.pem &&
     openssl pkcs12 -export -in platform.x509.pem -out platform.p12 -inkey platform.pem -password pass:888168 -name testKey &&
     keytool -importkeystore -deststorepass 888168 -destkeystore platform.jks -srckeystore platform.p12 -srcstoretype PKCS12 -srcstorepass 888168
-    去到对应的固件源码签名文件路径中执行，生成对应的platform.jks 替换本工程中的platform.jks就可以安装调试
-    Rk3562 的签名源码路径为：device/rockchip/common/security/
+### 去到对应的固件源码签名文件路径中执行，生成对应的platform.jks 替换本工程中的platform.jks就可以安装调试
+### Rk3562 的签名源码路径为：device/rockchip/common/security/
