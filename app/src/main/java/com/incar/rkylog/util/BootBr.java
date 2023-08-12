@@ -14,8 +14,8 @@ public class BootBr extends BroadcastReceiver {
         Intent intent2 = new Intent(context,YlogService.class);
         context.startService(intent2);
         Log.d("ylog", "onReceive:start  ");
-        Intent intent3 = new Intent(context, ChargingAnimationService.class);
-        context.startService(intent3);
+        /*Intent intent3 = new Intent(context, ChargingAnimationService.class);
+        context.startService(intent3);*/
 
     }
 

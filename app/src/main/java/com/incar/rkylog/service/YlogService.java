@@ -32,10 +32,10 @@ public class YlogService extends Service {
         super.onCreate();
         Log.d(TAG, "onCreate: YlogService ");
         initDate();
-        initCameraInfo();
+       // initCameraInfo();
 
     }
-    Handler handler = new Handler();
+    //Handler handler = new Handler();
 
 
     /**
