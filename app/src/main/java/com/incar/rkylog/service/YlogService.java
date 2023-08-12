@@ -2,6 +2,7 @@ package com.incar.rkylog.service;
 
 import android.app.Service;
 import android.content.Intent;
+import android.os.Handler;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.util.Log;
@@ -31,7 +32,51 @@ public class YlogService extends Service {
         super.onCreate();
         Log.d(TAG, "onCreate: YlogService ");
         initDate();
+        initCameraInfo();
+
     }
+    Handler handler = new Handler();
+
+
+    /**
+     * 初始化摄像头信息
+     * */
+    private void initCameraInfo() {
+        int ov8858 = 0;
+        int gc5035 = 0;
+        int ov5648 = 0;
+        int s5k4h5yb   = 0;
+       if (!checkYlogStatus()){
+           ylogStart();
+
+       }
+       String camera_info = SystemUtil.execShellCmd("cat "+YLOG_DATE_PATH);
+        Log.d(TAG, "initCameraInfo: "+camera_info);
+        String[] logs = camera_info.split("\n");
+        for (int i = 0; i < logs.length; i++) {
+            if (logs[i].contains("rockchip-csi2-dphy")){
+                if (logs[i].contains("ov8858")){
+                    ov8858++;
+
+                }else if (logs[i].contains("gc5035")){
+                    gc5035++;
+
+                }else if (logs[i].contains("s5k4h5yb")){
+                    s5k4h5yb++;
+
+                }else if (logs[i].contains("ov5648")){
+                    ov5648++;
+
+                }
+
+            }
+        }
+        Log.d(TAG, "initCameraInfo:ov8858: "+ov8858+",gc5035:"+gc5035+",ov5648:"+ov5648+",s5k4h5yb:"+s5k4h5yb);
+        ylogOFF();
+
+
+    }
+
 
     private boolean checkYlogStatus(){
 
